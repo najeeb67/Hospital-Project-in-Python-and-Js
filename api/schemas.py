@@ -18,7 +18,7 @@ class Doctor(DoctorBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class PatientBase(BaseModel):
     name: str
@@ -37,4 +37,4 @@ class Patient(PatientBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
