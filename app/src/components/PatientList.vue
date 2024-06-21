@@ -1,11 +1,42 @@
 <template>
   <div class="list-container">
     <h2>Patient List</h2>
+    <button @click="goToAddPatient">Add Patient</button>
     <ul>
-      <li v-for="patient in patients" :key="patient.id">{{ patient.name }} - {{ patient.condition }}</li>
+      <li v-for="patient in patients" :key="patient.id">
+        {{ patient.name }} - {{ patient.condition }} 
+      </li>
     </ul>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      patients: []
+    };
+  },
+  methods: {
+    async fetchPatients() {
+      try {
+        const response = await axios.get('http://localhost:8000/patients/');
+        this.patients = response.data;  
+      } catch (error) {
+        console.error('There was an error fetching the patients:', error.response.data);
+      }
+    },
+    goToAddPatient() {  
+      this.$router.push({ name: 'PatientForm' });
+    }
+  },
+  mounted() {
+    this.fetchPatients();
+  }
+};
+</script>
 
 <style scoped>
 .list-container {
@@ -19,6 +50,20 @@
 
 .list-container h2 {
   margin-bottom: 20px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #2980b9;
 }
 
 ul {

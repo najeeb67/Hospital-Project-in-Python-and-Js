@@ -14,28 +14,45 @@
         <label for="condition">Condition</label>
         <input type="text" id="condition" v-model="condition" required />
       </div>
+      <div class="form-group">
+        <label for="doctor_id">Doctor ID</label>
+        <input type="number" id="doctor_id" v-model="doctor_id" required />
+      </div>
       <button type="submit">Submit</button>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       name: '',
       age: '',
-      condition: ''
+      condition: '',
+      doctor_id: '' 
     };
   },
   methods: {
-    submitForm() {
-      // Handle form submission logic
-      console.log('Patient Added:', { name: this.name, age: this.age, condition: this.condition });
+    async submitForm() {
+      try {
+        const response = await axios.post('http://localhost:8000/patients/', {
+          name: this.name,
+          age: this.age,
+          condition: this.condition,
+          doctor_id: this.doctor_id // Include doctor_id in the POST request
+        });
+        console.log("patient added", response.data);
+        this.$router.push({ name: 'PatientList' });
+      } catch (error) {
+        console.error('There was an error adding the patient:', error.response.data);
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .form-container {

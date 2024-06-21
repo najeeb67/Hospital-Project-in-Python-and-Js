@@ -1,40 +1,80 @@
 <template>
-    <div class="list-container">
-      <h2>Doctor List</h2>
-      <ul>
-        <li v-for="doctor in doctors" :key="doctor.id">{{ doctor.name }} - {{ doctor.specialization }}</li>
-      </ul>
-    </div>
-    <h2><router-view to="/DoctorForm"> </router-view></h2>
-    
-  </template>
-  
-  
+  <div class="list-container">
+    <h2>Doctor List</h2>
+    <button @click="goToAddDoctor">Add Doctor</button>
+    <ul>
+      <li v-for="doctor in doctors" :key="doctor.id">
+        {{ doctor.name }} - {{ doctor.specialization }}
+      </li>
+    </ul>
+  </div>
+</template>
 
-  <style scoped>
-  .list-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 40px auto;
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      doctors: []
+    };
+  },
+  methods: {
+    async fetchDoctors() {
+      try {
+        const response = await axios.get('http://localhost:8000/doctors/');
+        this.doctors = response.data;
+      } catch (error) {
+        console.error('There was an error fetching the doctors:', error);
+      }
+    },
+    goToAddDoctor() {
+      this.$router.push({ name: 'DoctorForm' });
+    }
+  },
+  mounted() {
+    this.fetchDoctors();
   }
-  
-  .list-container h2 {
-    margin-bottom: 20px;
-  }
-  
-  ul {
-    list-style: none;
-  }
-  
-  ul li {
-    background-color: #f4f4f9;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.list-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.list-container h2 {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  background-color: #f4f4f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+</style>

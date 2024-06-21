@@ -16,5 +16,7 @@ class Patient(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     age = Column(Integer)
+    condition = Column(String)  
     doctor_id = Column(Integer, ForeignKey("doctors.id"))
     doctor = relationship("Doctor", back_populates="patients")
+

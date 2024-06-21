@@ -2,11 +2,25 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal, init_db
 import crud
+import schemas
 from schemas import Doctor, DoctorCreate, DoctorUpdate, Patient, PatientCreate, PatientUpdate
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:8000",
+    "http://localhost:8080"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -16,7 +30,6 @@ def get_db():
         db.close()
 
 init_db()
-
 
 @app.post("/doctors/", response_model=Doctor)
 def create_doctor(doctor: DoctorCreate, db: Session = Depends(get_db)):
@@ -29,7 +42,7 @@ def read_doctor(doctor_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Doctor not found")
     return db_doctor
 
-@app.get("/doctors/", response_model=List[Doctor])
+@app.get("/doctors/", response_model=List[schemas.Doctor])
 def read_doctors(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     doctors = crud.get_doctors(db, skip=skip, limit=limit)
     return doctors
@@ -48,9 +61,9 @@ def delete_doctor(doctor_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Doctor not found")
     return db_doctor
 
-
 @app.post("/patients/", response_model=Patient)
 def create_patient(patient: PatientCreate, db: Session = Depends(get_db)):
+    print(patient.dict())
     return crud.create_patient(db=db, patient=patient)
 
 @app.get("/patients/{patient_id}", response_model=Patient)
