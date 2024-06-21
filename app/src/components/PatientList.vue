@@ -4,37 +4,37 @@
     <button @click="goToAddPatient">Add Patient</button>
     <ul>
       <li v-for="patient in patients" :key="patient.id">
-        {{ patient.name }} - {{ patient.condition }} 
+        {{ patient.name }} - {{ patient.condition }}
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
-      patients: []
+      patients: [],
     };
   },
   methods: {
     async fetchPatients() {
       try {
-        const response = await axios.get('http://localhost:8000/patients/');
-        this.patients = response.data;  
+        const response = await axios.get("http://localhost:8000/patients/");
+        this.patients = response.data;
       } catch (error) {
-        console.error('There was an error fetching the patients:', error.response.data);
+        console.error("There was an error fetching the patients:", error.response.data);
       }
     },
-    goToAddPatient() {  
-      this.$router.push({ name: 'PatientForm' });
-    }
+    goToAddPatient() {
+      this.$router.push({ name: "PatientForm" });
+    },
   },
   mounted() {
     this.fetchPatients();
-  }
+  },
 };
 </script>
 
@@ -53,7 +53,7 @@ export default {
 }
 
 button {
-  background-color: #3498db;
+  background-color: rgb(87, 82, 82);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: rgb(87, 82, 82);
 }
 
 ul {

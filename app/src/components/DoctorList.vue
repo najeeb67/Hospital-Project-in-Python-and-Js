@@ -11,30 +11,30 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
-      doctors: []
+      doctors: [],
     };
   },
   methods: {
     async fetchDoctors() {
       try {
-        const response = await axios.get('http://localhost:8000/doctors/');
+        const response = await axios.get("http://localhost:8000/doctors/");
         this.doctors = response.data;
       } catch (error) {
-        console.error('There was an error fetching the doctors:', error);
+        console.error("There was an error fetching the doctors:", error);
       }
     },
     goToAddDoctor() {
-      this.$router.push({ name: 'DoctorForm' });
-    }
+      this.$router.push({ name: "DoctorForm" });
+    },
   },
   mounted() {
     this.fetchDoctors();
-  }
+  },
 };
 </script>
 
@@ -53,7 +53,7 @@ export default {
 }
 
 button {
-  background-color: #3498db;
+  background-color: rgb(87, 82, 82);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: rgb(87, 82, 82);
 }
 
 ul {

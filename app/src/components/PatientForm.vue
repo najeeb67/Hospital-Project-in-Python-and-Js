@@ -86,7 +86,7 @@ export default {
 }
 
 button {
-  background-color: #3498db;
+  background-color: rgb(87, 82, 82);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -95,6 +95,6 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: rgb(87, 82, 82);
 }
 </style>
