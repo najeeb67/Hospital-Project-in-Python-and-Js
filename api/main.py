@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from database import SessionLocal, init_db
 import crud
 import schemas
-from schemas import Doctor, DoctorCreate, DoctorUpdate, Patient, PatientCreate, PatientUpdate
+from schemas import *
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -91,3 +91,33 @@ def delete_patient(patient_id: int, db: Session = Depends(get_db)):
     if db_patient is None:
         raise HTTPException(status_code=404, detail="Patient not found")
     return db_patient
+
+@app.post("/appointments/", response_model=Appointment)
+def create_appointment(appointment: AppointmentCreate, db: Session = Depends(get_db)):
+    return crud.create_appointment(db=db, appointment=appointment)
+
+@app.get("/appointments/{appointment_id}", response_model=Appointment)
+def read_appointment(appointment_id: int, db: Session = Depends(get_db)):
+    db_appointment = crud.get_appointment(db, appointment_id)
+    if db_appointment is None:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    return db_appointment
+
+@app.get("/appointments/", response_model=List[Appointment])
+def read_appointments(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    appointments = crud.get_appointments(db, skip=skip, limit=limit)
+    return appointments
+
+@app.put("/appointments/{appointment_id}", response_model=Appointment)
+def update_appointment(appointment_id: int, appointment: AppointmentUpdate, db: Session = Depends(get_db)):
+    db_appointment = crud.update_appointment(db, appointment_id, appointment)
+    if db_appointment is None:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    return db_appointment
+
+@app.delete("/appointments/{appointment_id}", response_model=Appointment)
+def delete_appointment(appointment_id: int, db: Session = Depends(get_db)):
+    db_appointment = crud.delete_appointment(db, appointment_id)
+    if db_appointment is None:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    return db_appointment

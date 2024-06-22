@@ -7,7 +7,7 @@
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/doctors">Doctors</router-link></li>
           <li><router-link to="/patients">Patients</router-link></li>
-          <li><router-link to="/Appointment">Appointment</router-link></li>
+          <router-link to="/appointments">Appointments</router-link>
           <li><router-link to="/Departments">Departments</router-link></li>
           <li><router-link to="/services">Our Services</router-link></li>
           <li>

@@ -1,8 +1,19 @@
 <template>
-
-    <h1>this is Appointment Page</h1>
+  <div>
+    <AppointmentForm />
+  </div>
 </template>
 
 <script>
+import AppointmentForm from "@/components/AppointmentForm.vue";
 
+export default {
+  components: {
+    AppointmentForm,
+  },
+};
 </script>
+
+<style>
+/* Add your styles here */
+</style>
