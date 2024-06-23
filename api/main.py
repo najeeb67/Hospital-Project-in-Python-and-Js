@@ -11,7 +11,6 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8000",
-    "http://localhost:8080"
 ]
 
 app.add_middleware(
@@ -121,3 +120,14 @@ def delete_appointment(appointment_id: int, db: Session = Depends(get_db)):
     if db_appointment is None:
         raise HTTPException(status_code=404, detail="Appointment not found")
     return db_appointment
+
+
+@app.get("/departments/", response_model=List[str])
+def read_departments(db: Session = Depends(get_db)):
+    departments = crud.get_departments(db)
+    return [d[0] for d in departments]
+
+@app.get("/departments/{department}/doctors", response_model=List[Doctor])
+def read_doctors_by_department(department: str, db: Session = Depends(get_db)):
+    doctors = crud.get_doctors_by_department(db, department)
+    return doctors

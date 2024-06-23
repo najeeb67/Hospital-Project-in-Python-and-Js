@@ -108,3 +108,9 @@ def delete_appointment(db: Session, appointment_id: int):
         db.commit()
     return db_appointment
     
+    
+def get_departments(db: Session):
+    return db.query(Doctor.department).distinct().all()
+
+def get_doctors_by_department(db: Session, department: str):
+    return db.query(Doctor).filter(Doctor.department == department).all()
