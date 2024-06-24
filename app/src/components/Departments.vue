@@ -43,3 +43,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Add some styles if needed */
+</style>

@@ -6,6 +6,9 @@ import PatientForm from "../components/PatientForm.vue";
 import PatientList from "../components/PatientList.vue";
 import AppointmentForm from "../components/AppointmentForm.vue";
 import Departments from "@/components/Departments.vue";
+import services from "@/components/services.vue";
+import contact_us from "../views/contact_us.vue";
+import Events from "../views/Events.vue";
 
 const routes = [
   {
@@ -43,6 +46,21 @@ const routes = [
     name: "Departments",
     component: Departments,
     props: true,
+  },
+  {
+    path: "/services/:service",
+    name: "services",
+    component: services,
+  },
+  {
+    path: "/contact_us",
+    name: "contact_us",
+    component: contact_us,
+  },
+  {
+    path: "/Events",
+    name: "Events",
+    component: Events,
   },
 ];
 

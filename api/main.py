@@ -11,6 +11,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8000",
+    "http://localhost:8080"
 ]
 
 app.add_middleware(
@@ -131,3 +132,8 @@ def read_departments(db: Session = Depends(get_db)):
 def read_doctors_by_department(department: str, db: Session = Depends(get_db)):
     doctors = crud.get_doctors_by_department(db, department)
     return doctors
+
+@app.get("/services/", response_model=List[str])
+def read_services(db: Session = Depends(get_db)):
+    services = ["Emergency", "Surgery", "Pediatrics", "Orthopedics"] 
+    return services
